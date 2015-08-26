@@ -33,7 +33,7 @@
   View.SPEED = 100;
 
   View.prototype.handleKeyEvent = function (event) {
-    if (View.KEYS[event.keyCode]) {
+    if (!this.gamePaused && View.KEYS[event.keyCode]) {
       this.board.snake.turn(View.KEYS[event.keyCode]);
     } else {
       if (event.keyCode === 80) {
@@ -63,8 +63,6 @@
   };
 
   View.prototype.render = function () {
-    // simple text based rendering
-    // this.$el.html(this.board.render());
     this.updateClasses(this.board.snake.segments, "snake");
     this.updateClasses([this.board.snake.head()], "head");
     this.updateClasses([this.board.apple.position], "apple");

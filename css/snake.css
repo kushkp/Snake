@@ -18,10 +18,11 @@ ul {
 
 body {
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  /*left: 50%;
+  transform: translateX(-50%);*/
   font-family: sans-serif;
-  width: 520px;
+  width: 100%;
+  min-width:520px;
   text-align: center;
   background-color: lightgreen;
 }
@@ -31,13 +32,39 @@ h1 {
   margin: 20px 30px;
 }
 
+div.arcadeView {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+}
+
 figure {
   /*position: relative;*/
   display: inline-block;
   border: 10px solid #4C331A;
   border-radius: 10px;
   background-color: lightgray;
+  min-width:520px;
 }
+
+.score {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    display: block;
+}
+
+/*aside {
+  display: inline-block;
+  position: absolute;
+  margin-left: 10px;
+  float: right;
+  width: 200px;
+  border: 10px solid #4C331A;
+  border-radius: 10px;
+  height: 500px;
+}*/
 
 ul {
 }

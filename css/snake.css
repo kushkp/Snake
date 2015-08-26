@@ -13,7 +13,6 @@ ul {
 body {
   font-family: sans-serif;
   text-align: center;
-  font-weight: bold;
 }
 
 h1 {
@@ -23,7 +22,7 @@ h1 {
 
 figure {
   display: inline-block;
-  border: 10px solid black;
+  border: 5px solid black;
 }
 
 ul {
@@ -37,14 +36,21 @@ ul:after {
 
 li {
   float: left;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 }
 
 .apple {
   background: red;
+  border-radius: 5px;
 }
 
 .snake {
   background: green;
+  border-radius: 2.5px;
+}
+
+.head {
+  background: green;
+  border-radius: 4.5px;
 }

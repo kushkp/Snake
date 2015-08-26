@@ -6,7 +6,7 @@
   var View = SG.View = function ($el) {
     this.$el = $el;
 
-    this.board = new SG.Board(20);
+    this.board = new SG.Board(50);
     this.setupGrid();
 
     this.intervalId = window.setInterval(
@@ -37,8 +37,8 @@
   View.prototype.render = function () {
     // simple text based rendering
     // this.$el.html(this.board.render());
-
     this.updateClasses(this.board.snake.segments, "snake");
+    this.updateClasses([this.board.snake.head()], "head");
     this.updateClasses([this.board.apple.position], "apple");
   };
 

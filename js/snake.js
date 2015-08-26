@@ -3,6 +3,10 @@
     window.SG = {};
   }
 
+  // var Game = SG.Game = function() {
+  //   this.snakeGame = new
+  // };
+
   var Coord = SG.Coord = function (i, j) {
     this.i = i;
     this.j = j;
@@ -26,27 +30,28 @@
   };
 
   Apple.prototype.replace = function () {
-    var x = Math.floor(Math.random() * this.board.dim);
-    var y = Math.floor(Math.random() * this.board.dim);
+    var i = Math.floor(Math.random() * this.board.dimension);
+    var j = Math.floor(Math.random() * this.board.dimension);
 
     // Don't place an apple where there is a snake
-    while (this.board.snake.isOccupying([x, y])) {
-      x = Math.floor(Math.random() * this.board.dim);
-      y = Math.floor(Math.random() * this.board.dim);
+    while (this.board.snake.isOccupying([i, j])) {
+      i = Math.floor(Math.random() * this.board.dimension);
+      j = Math.floor(Math.random() * this.board.dimension);
     }
 
-    this.position = new Coord(x, y);
+    this.position = new Coord(i, j);
   };
 
   var Snake = SG.Snake = function (board) {
-    this.dir = "N";
+    this.direction = "N";
     this.turning = false;
     this.board = board;
+    this.score = 0;
 
-    var center = new Coord(Math.floor(board.dim/2), Math.floor(board.dim/2));
+    var center = new Coord(Math.floor(board.dimension/2), Math.floor(board.dimension/2));
     this.segments = [center];
 
-    this.growTurns = 0;
+    this.growSegments = 0;
   };
 
   Snake.DIFFS = {
@@ -57,11 +62,12 @@
   };
 
   Snake.SYMBOL = "S";
-  Snake.GROW_TURNS = 3;
+  Snake.GROW_SEGMENTS = 5;
 
   Snake.prototype.eatApple = function () {
     if (this.head().equals(this.board.apple.position)) {
-      this.growTurns += 3;
+      this.score += 10;
+      this.growSegments += Snake.GROW_SEGMENTS;
       return true;
     } else {
       return false;
@@ -101,7 +107,7 @@
 
   Snake.prototype.move = function () {
     // move snake forward
-    this.segments.push(this.head().plus(Snake.DIFFS[this.dir]));
+    this.segments.push(this.head().plus(Snake.DIFFS[this.direction]));
 
     // allow turning again
     this.turning = false;
@@ -112,8 +118,8 @@
     }
 
     // if not growing, remove tail segment
-    if (this.growTurns > 0) {
-      this.growTurns -= 1;
+    if (this.growSegments > 0) {
+      this.growSegments -= 1;
     } else {
       this.segments.shift();
     }
@@ -124,58 +130,26 @@
     }
   };
 
-  Snake.prototype.turn = function (dir) {
+  Snake.prototype.turn = function (direction) {
     // avoid turning directly back on yourself
-    if (Snake.DIFFS[this.dir].isOpposite(Snake.DIFFS[dir]) ||
+    if (Snake.DIFFS[this.direction].isOpposite(Snake.DIFFS[direction]) ||
       this.turning) {
       return;
     } else {
       this.turning = true;
-      this.dir = dir;
+      this.direction = direction;
     }
   };
 
-  var Board = SG.Board = function (dim) {
-    this.dim = dim;
+  var Board = SG.Board = function (dimension) {
+    this.dimension = dimension;
 
     this.snake = new Snake(this);
     this.apple = new Apple(this);
   };
 
-  Board.BLANK_SYMBOL = ".";
-
-  Board.blankGrid = function (dim) {
-    var grid = [];
-
-    for (var i = 0; i < dim; i++) {
-      var row = [];
-      for (var j = 0; j < dim; j++) {
-        row.push(Board.BLANK_SYMBOL);
-      }
-      grid.push(row);
-    }
-
-    return grid;
-  };
-
-  Board.prototype.render = function () {
-    var grid = Board.blankGrid(this.dim);
-
-    this.snake.segments.forEach(function (segment) {
-      grid[segment.i][segment.j] = Snake.SYMBOL;
-    });
-
-    grid[this.apple.position.i][this.apple.position.j] = Apple.SYMBOL;
-
-    // join it up
-    var rowStrs = [];
-    grid.map(function (row) {
-      return row.join("");
-    }).join("\n");
-  };
-
   Board.prototype.validPosition = function (coord) {
-    return (coord.i >= 0) && (coord.i < this.dim) &&
-      (coord.j >= 0) && (coord.j < this.dim);
+    return (coord.i >= 0) && (coord.i < this.dimension) &&
+      (coord.j >= 0) && (coord.j < this.dimension);
   };
 })();

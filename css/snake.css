@@ -1,9 +1,15 @@
+/*window {
+  width: 520px;
+  min-width: 520px;
+}*/
+
 html, body, figure, figcaption, ul, li, h1 {
   margin: 0;
   padding: 0;
   border: 0;
   font: inherit;
   text-align: inherit;
+  color: #4C331A;
 }
 
 ul {
@@ -11,18 +17,26 @@ ul {
 }
 
 body {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: sans-serif;
+  width: 520px;
   text-align: center;
+  background-color: lightgreen;
 }
 
 h1 {
   font-size: 60px;
-  margin: 30px;
+  margin: 20px 30px;
 }
 
 figure {
+  /*position: relative;*/
   display: inline-block;
-  border: 5px solid black;
+  border: 10px solid #4C331A;
+  border-radius: 10px;
+  background-color: lightgray;
 }
 
 ul {
@@ -40,9 +54,61 @@ li {
   height: 10px;
 }
 
+.modal-bg {
+  display: none;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+.active {
+  display: block !important;
+}
+
+.gameover, .start, .pause{
+  display: none;
+  position: absolute;
+  background-color: coral;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.gameover button {
+  width: 70px;
+  border: none;
+  outline: none;
+  background-color: #90EE90;
+  color: #4C331A;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.gameover p{
+  margin: 5px 30px 15px 30px;
+}
+
+.gameover button:hover {
+  background-color: #73BE73;
+}
+
+.gameover button:focus:active {
+  background-color: #487748;
+}
+
 .apple {
   background: red;
   border-radius: 5px;
+  background-image: url('http://res.cloudinary.com/dydhzgrty/image/upload/c_scale,h_10/v1440618487/Snake/appel.gif')
 }
 
 .snake {

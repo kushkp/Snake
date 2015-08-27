@@ -36,7 +36,7 @@ div.arcadeView {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: 420px;
 }
 
 figure {
@@ -52,14 +52,14 @@ figure {
 .score {
     position: absolute;
     top: 15px;
-    left: 245px;
+    left: 18px;
     display: block;
 }
 
 .highScore {
   position: absolute;
   top: 15px;
-  left: 410px;
+  left: 288px;
   display: block;
 }
 

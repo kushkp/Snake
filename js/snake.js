@@ -3,62 +3,23 @@
     window.SG = {};
   }
 
-  // var Game = SG.Game = function() {
-  //   this.snakeGame = new
-  // };
-
-  var Coord = SG.Coord = function (i, j) {
-    this.i = i;
-    this.j = j;
-  };
-
-  Coord.prototype.equals = function (coord2) {
-    return (this.i == coord2.i) && (this.j == coord2.j);
-  };
-
-  Coord.prototype.isOpposite = function (coord2) {
-    return (this.i == (-1 * coord2.i)) && (this.j == (-1 * coord2.j));
-  };
-
-  Coord.prototype.plus = function (coord2) {
-    return new Coord(this.i + coord2.i, this.j + coord2.j);
-  };
-
-  var Apple = SG.Apple = function (board) {
-    this.board = board;
-    this.replace();
-  };
-
-  Apple.prototype.replace = function () {
-    var i = Math.floor(Math.random() * this.board.dimension);
-    var j = Math.floor(Math.random() * this.board.dimension);
-
-    // Don't place an apple where there is a snake
-    while (this.board.snake.isOccupying([i, j])) {
-      i = Math.floor(Math.random() * this.board.dimension);
-      j = Math.floor(Math.random() * this.board.dimension);
-    }
-
-    this.position = new Coord(i, j);
-  };
-
   var Snake = SG.Snake = function (board) {
     this.direction = "N";
     this.turning = false;
     this.board = board;
     this.score = 0;
 
-    var center = new Coord(Math.floor(board.dimension/2), Math.floor(board.dimension/2));
+    var center = new SG.Coord(Math.floor(board.dimension/2), Math.floor(board.dimension/2));
     this.segments = [center];
 
     this.growSegments = 0;
   };
 
   Snake.DIFFS = {
-    "N": new Coord(-1, 0),
-    "E": new Coord(0, 1),
-    "S": new Coord(1, 0),
-    "W": new Coord(0, -1)
+    "N": new SG.Coord(-1, 0),
+    "E": new SG.Coord(0, 1),
+    "S": new SG.Coord(1, 0),
+    "W": new SG.Coord(0, -1)
   };
 
   Snake.SYMBOL = "S";
@@ -138,17 +99,5 @@
       this.turning = true;
       this.direction = direction;
     }
-  };
-
-  var Board = SG.Board = function (dimension) {
-    this.dimension = dimension;
-
-    this.snake = new Snake(this);
-    this.apple = new Apple(this);
-  };
-
-  Board.prototype.validPosition = function (coord) {
-    return (coord.i >= 0) && (coord.i < this.dimension) &&
-      (coord.j >= 0) && (coord.j < this.dimension);
   };
 })();

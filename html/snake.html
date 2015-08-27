@@ -13,6 +13,7 @@
       <figure class="snake-game"></figure>
       <div class="score"></div>
       <div class="highScore"></div>
+      <div class="controls">Controls: ↑ ↓ ← → / W A S D / P(ause)</div>
     </div>
 
     <div class="controls"></div>
@@ -45,15 +46,7 @@
 
     <script>
       $(function () {
-        var $welcome = $('.welcome');
-        $welcome.addClass('active');
-        $('button').click(function(event) {
-          $welcome.removeClass('active');
-          $('button').unbind('click');
-
-          var difficulty = event.target.className;
-          new SG.View($(".snake-game"), difficulty);
-        });
+        new SG.View($(".snake-game"));
       });
     </script>
   </body>

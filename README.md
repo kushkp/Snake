@@ -1,5 +1,5 @@
-# w6d3: [Snake][description]
+# [Snake][description]
 
 * **[Live Demo]()**
 
-[description]: 
+[description]:

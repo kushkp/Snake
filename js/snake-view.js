@@ -8,14 +8,8 @@
     this.board = new SG.Board(50);
     this.setupGrid();
     this.gamePaused = false;
-    this.intervalId = window.setInterval(
-      this.step.bind(this),
-      View.SPEED[difficulty]
-    );
 
-    $(window).on("keydown", this.handleKeyEvent.bind(this));
-
-
+    this.welcome();
   };
 
   View.KEYS = {
@@ -33,6 +27,25 @@
 
   View.SPEED = {"easy": 100, "medium": 65, "hard": 30 };
 
+  View.prototype.welcome = function() {
+    var $welcome = $('.welcome');
+    $welcome.addClass('active');
+    $('button').click(function(event) {
+      $welcome.removeClass('active');
+      $('button').unbind('click');
+      var difficulty = event.target.className;
+      this.startGame(difficulty);
+    }.bind(this));
+  };
+
+  View.prototype.startGame = function(difficulty) {
+    this.intervalId = window.setInterval(
+      this.step.bind(this),
+      View.SPEED[difficulty]
+    );
+    $(window).on("keydown", this.handleKeyEvent.bind(this));
+  };
+
   View.prototype.handleKeyEvent = function (event) {
     if (!this.gamePaused && View.KEYS[event.keyCode]) {
       this.board.snake.turn(View.KEYS[event.keyCode]);
@@ -40,7 +53,6 @@
       if (event.keyCode === 80) {
         this.togglePause();
       }
-      // some other key was pressed; ignore.
     }
   };
 
@@ -57,10 +69,6 @@
       this.gamePaused = true;
       window.clearInterval(this.intervalId);
     }
-  };
-
-  View.prototype.launchModal = function() {
-
   };
 
   View.prototype.render = function () {
@@ -123,9 +131,6 @@
     $gameOver.find('.yesAgain').click(function() {
       new SG.View($el);
       $gameOver.removeClass('active');
-    });
-    $gameOver.find('.notAgain').click(function() {
-      $gameOver.html("<p>Come back soon!</p>");
     });
   };
 

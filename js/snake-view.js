@@ -12,11 +12,7 @@
     this.welcome();
   };
 
-  View.prototype.restart = function() {
-    $(window).off();
-    this.board = new SG.Board(40);
-    this.welcome();
-  };
+  View.SPEED = {"easy": 100, "medium": 65, "hard": 30 };
 
   View.KEYS = {
     //arrow keys
@@ -31,28 +27,6 @@
     65: "W"
   };
 
-  View.SPEED = {"easy": 100, "medium": 65, "hard": 30 };
-
-  View.prototype.welcome = function() {
-    var $welcome = $('.welcome');
-    $welcome.addClass('active');
-    $('button').click(function(event) {
-      $welcome.removeClass('active');
-      $('button').unbind('click');
-      var difficulty = event.target.className;
-      this.difficulty = difficulty;
-      this.startGame();
-    }.bind(this));
-  };
-
-  View.prototype.startGame = function(difficulty) {
-    this.intervalId = window.setInterval(
-      this.step.bind(this),
-      View.SPEED[this.difficulty]
-    );
-    $(window).on("keydown", this.handleKeyEvent.bind(this));
-  };
-
   View.prototype.handleKeyEvent = function (event) {
     if (!this.gamePaused && View.KEYS[event.keyCode]) {
       this.board.snake.turn(View.KEYS[event.keyCode]);
@@ -60,21 +34,6 @@
       if (event.keyCode === 80) {
         this.togglePause();
       }
-    }
-  };
-
-  View.prototype.togglePause = function () {
-    if (this.gamePaused) {
-      $('.pause').removeClass('active');
-      this.gamePaused = false;
-      this.intervalId = window.setInterval(
-        this.step.bind(this),
-        View.SPEED[this.difficulty]
-      );
-    } else {
-      $('.pause').addClass('active');
-      this.gamePaused = true;
-      window.clearInterval(this.intervalId);
     }
   };
 
@@ -93,15 +52,10 @@
     }
   };
 
-  View.prototype.updateClasses = function(coords, className) {
-    this.$li.filter("." + className).removeClass(className);
-
-    if (coords && coords[0]) {
-      coords.forEach(function(coord){
-        var flatCoord = (coord.i * this.board.dimension) + coord.j;
-        this.$li.eq(flatCoord).addClass(className);
-      }.bind(this));
-    }
+  View.prototype.restart = function() {
+    $(window).off();
+    this.board = new SG.Board(40);
+    this.welcome();
   };
 
   View.prototype.setupGrid = function () {
@@ -119,6 +73,14 @@
     this.$li = this.$el.find("li");
   };
 
+  View.prototype.startGame = function(difficulty) {
+    this.intervalId = window.setInterval(
+      this.step.bind(this),
+      View.SPEED[this.difficulty]
+    );
+    $(window).on("keydown", this.handleKeyEvent.bind(this));
+  };
+
   View.prototype.step = function () {
     if (this.board.snake.segments.length > 0) {
       this.board.snake.move();
@@ -129,6 +91,44 @@
 
       window.clearInterval(this.intervalId);
     }
+  };
+
+  View.prototype.togglePause = function () {
+    if (this.gamePaused) {
+      $('.pause').removeClass('active');
+      this.gamePaused = false;
+      this.intervalId = window.setInterval(
+        this.step.bind(this),
+        View.SPEED[this.difficulty]
+      );
+    } else {
+      $('.pause').addClass('active');
+      this.gamePaused = true;
+      window.clearInterval(this.intervalId);
+    }
+  };
+
+  View.prototype.updateClasses = function(coords, className) {
+    this.$li.filter("." + className).removeClass(className);
+
+    if (coords && coords[0]) {
+      coords.forEach(function(coord){
+        var flatCoord = (coord.i * this.board.dimension) + coord.j;
+        this.$li.eq(flatCoord).addClass(className);
+      }.bind(this));
+    }
+  };
+
+  View.prototype.welcome = function() {
+    var $welcome = $('.welcome');
+    $welcome.addClass('active');
+    $('button').click(function(event) {
+      $welcome.removeClass('active');
+      $('button').unbind('click');
+      var difficulty = event.target.className;
+      this.difficulty = difficulty;
+      this.startGame();
+    }.bind(this));
   };
 
   SG.gameOver = function($el) {

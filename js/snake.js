@@ -15,6 +15,8 @@
     this.growSegments = 0;
   };
 
+  Snake.GROW_SEGMENTS = 3;
+
   Snake.DIFFS = {
     "N": new SG.Coord(-1, 0),
     "E": new SG.Coord(0, 1),
@@ -22,8 +24,6 @@
     "W": new SG.Coord(0, -1)
   };
 
-  Snake.SYMBOL = "S";
-  Snake.GROW_SEGMENTS = 5;
 
   Snake.prototype.eatApple = function () {
     if (this.head().equals(this.board.apple.position)) {
@@ -35,6 +35,10 @@
     }
   };
 
+  Snake.prototype.head = function () {
+    return this.segments[this.segments.length - 1];
+  };
+
   Snake.prototype.isOccupying = function (array) {
     var result = false;
     this.segments.forEach(function (segment) {
@@ -44,10 +48,6 @@
       }
     });
     return result;
-  };
-
-  Snake.prototype.head = function () {
-    return this.segments[this.segments.length - 1];
   };
 
   Snake.prototype.isValid = function () {

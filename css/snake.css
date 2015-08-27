@@ -22,7 +22,7 @@ body {
   transform: translateX(-50%);*/
   font-family: sans-serif;
   width: 100%;
-  min-width:520px;
+  min-width:420px;
   text-align: center;
   background-color: lightgreen;
 }
@@ -36,7 +36,7 @@ div.arcadeView {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 520px;
+  width: 100%;
 }
 
 figure {
@@ -45,14 +45,14 @@ figure {
   border: 10px solid #4C331A;
   border-radius: 10px;
   background-color: lightgray;
-  min-width:520px;
-  height: 520px;
+  min-width:400px;
+  height: 400px;
 }
 
 .score {
     position: absolute;
     top: 15px;
-    left: 20px;
+    left: 245px;
     display: block;
 }
 

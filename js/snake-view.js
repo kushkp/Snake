@@ -5,7 +5,7 @@
 
   var View = SG.View = function ($el, difficulty) {
     this.$el = $el;
-    this.board = new SG.Board(50);
+    this.board = new SG.Board(40);
     this.setupGrid();
     this.gamePaused = false;
 
@@ -14,7 +14,7 @@
 
   View.prototype.restart = function() {
     $(window).off();
-    this.board = new SG.Board(50);
+    this.board = new SG.Board(40);
     this.welcome();
   };
 

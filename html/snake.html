@@ -8,19 +8,31 @@
 
   <body>
     <h1>Snake</h1>
+
     <div class="arcadeView">
       <figure class="snake-game"></figure>
       <div class="score"></div>
+      <div class="highScore"></div>
     </div>
+
     <div class="controls"></div>
-    <div class="start">welcome!</div>
+
+    <div class="welcome">
+      <p>Welcome!</p>
+      <p>Choose Difficulty:</p>
+      <button type="button" class="easy" name="easy">Easy</button>
+      <button type="button" class="medium" name="medium">Medium</button>
+      <button type="button" class="hard" name="hard">Hard</button>
+    </div>
+
     <div class="gameover">
       <p>Play again?</p>
       <button type="button" class="yesAgain">Yes</button>
     </div>
+
     <div class="pause">
-      <p>The game is paused.</p>
-      <p>Press P to resume.</p>
+      <p>PAUSED</p>
+      <p>Press P to resume</p>
     </div>
 
 
@@ -33,7 +45,15 @@
 
     <script>
       $(function () {
-        new SG.View($(".snake-game"));
+        var $welcome = $('.welcome');
+        $welcome.addClass('active');
+        $('button').click(function(event) {
+          $welcome.removeClass('active');
+          $('button').unbind('click');
+
+          var difficulty = event.target.className;
+          new SG.View($(".snake-game"), difficulty);
+        });
       });
     </script>
   </body>

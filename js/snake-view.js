@@ -3,18 +3,19 @@
     window.SG = {};
   }
 
-  var View = SG.View = function ($el) {
+  var View = SG.View = function ($el, difficulty) {
     this.$el = $el;
-
     this.board = new SG.Board(50);
     this.setupGrid();
     this.gamePaused = false;
     this.intervalId = window.setInterval(
       this.step.bind(this),
-      View.SPEED
+      View.SPEED[difficulty]
     );
 
     $(window).on("keydown", this.handleKeyEvent.bind(this));
+
+
   };
 
   View.KEYS = {
@@ -30,7 +31,7 @@
     65: "W"
   };
 
-  View.SPEED = 100;
+  View.SPEED = {"easy": 100, "medium": 65, "hard": 30 };
 
   View.prototype.handleKeyEvent = function (event) {
     if (!this.gamePaused && View.KEYS[event.keyCode]) {
@@ -67,7 +68,14 @@
     this.updateClasses([this.board.snake.head()], "head");
     this.updateClasses([this.board.apple.position], "apple");
 
-    $(document.getElementsByClassName('score')).html("score: " + this.board.snake.score);
+    $(document.getElementsByClassName('score')).html(
+      "score: " + this.board.snake.score);
+
+    if (SG.highScore) {
+      $(document.getElementsByClassName('highScore')).html(
+        "high score: " + SG.highScore
+      );
+    }
   };
 
   View.prototype.updateClasses = function(coords, className) {
@@ -102,6 +110,7 @@
       this.render();
     } else {
       // alert("You lose!");
+      SG.updateHighScore(this.board.snake.score);
       SG.gameOver(this.$el);
 
       window.clearInterval(this.intervalId);
@@ -118,12 +127,16 @@
     $gameOver.find('.notAgain').click(function() {
       $gameOver.html("<p>Come back soon!</p>");
     });
-
-    // var newGame = confirm("Would you like to play again?");
-    // if (newGame) {
-    //   new SG.View($el);
-    // } else {
-    //
-    // }
   };
+
+  SG.updateHighScore = function(score) {
+    if (this.highScore) {
+      if (score > this.highScore) {
+        this.highScore = score;
+      }
+    } else {
+      this.highScore = score;
+    }
+  };
+
 })();

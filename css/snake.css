@@ -46,6 +46,7 @@ figure {
   border-radius: 10px;
   background-color: lightgray;
   min-width:520px;
+  height: 520px;
 }
 
 .score {
@@ -53,6 +54,13 @@ figure {
     top: 15px;
     left: 20px;
     display: block;
+}
+
+.highScore {
+  position: absolute;
+  top: 15px;
+  left: 410px;
+  display: block;
 }
 
 /*aside {
@@ -96,7 +104,7 @@ li {
   display: block !important;
 }
 
-.gameover, .start, .pause{
+.gameover, .welcome, .pause{
   display: none;
   position: absolute;
   background-color: coral;
@@ -109,15 +117,18 @@ li {
   font-weight: bold;
 }
 
-.gameover button {
+.gameover button, .welcome button {
   width: 70px;
   border: none;
   outline: none;
-  background-color: #90EE90;
-  color: #4C331A;
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
+}
+
+.gameover button {
+  background-color: #90EE90;
+  color: #4C331A;
 }
 
 .gameover p{
@@ -130,6 +141,18 @@ li {
 
 .gameover button:focus:active {
   background-color: #487748;
+}
+
+.welcome button.easy {
+  background-color: cornflowerblue;
+}
+
+.welcome button.medium {
+  background-color: gold;
+}
+
+.welcome button.hard {
+  background-color: red;
 }
 
 .apple {

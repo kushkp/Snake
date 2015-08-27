@@ -101,7 +101,6 @@
         return false;
       }
     }
-
     return true;
   };
 

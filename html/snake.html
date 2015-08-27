@@ -21,9 +21,9 @@
     <div class="welcome">
       <p>Welcome!</p>
       <p>Choose Difficulty:</p>
-      <button type="button" class="easy" name="easy">Easy</button>
-      <button type="button" class="medium" name="medium">Medium</button>
-      <button type="button" class="hard" name="hard">Hard</button>
+      <button type="button" class="easy" name="easy">Slug</button>
+      <button type="button" class="medium" name="medium">Worm</button>
+      <button type="button" class="hard" name="hard">Python</button>
     </div>
 
     <div class="gameover">
@@ -46,7 +46,7 @@
 
     <script>
       $(function () {
-        new SG.View($(".snake-game"));
+        SG.view = new SG.View($(".snake-game"));
       });
     </script>
   </body>

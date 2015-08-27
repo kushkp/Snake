@@ -12,6 +12,12 @@
     this.welcome();
   };
 
+  View.prototype.restart = function() {
+    $(window).off();
+    this.board = new SG.Board(50);
+    this.welcome();
+  };
+
   View.KEYS = {
     //arrow keys
     38: "N",
@@ -34,14 +40,15 @@
       $welcome.removeClass('active');
       $('button').unbind('click');
       var difficulty = event.target.className;
-      this.startGame(difficulty);
+      this.difficulty = difficulty;
+      this.startGame();
     }.bind(this));
   };
 
   View.prototype.startGame = function(difficulty) {
     this.intervalId = window.setInterval(
       this.step.bind(this),
-      View.SPEED[difficulty]
+      View.SPEED[this.difficulty]
     );
     $(window).on("keydown", this.handleKeyEvent.bind(this));
   };
@@ -62,7 +69,7 @@
       this.gamePaused = false;
       this.intervalId = window.setInterval(
         this.step.bind(this),
-        View.SPEED
+        View.SPEED[this.difficulty]
       );
     } else {
       $('.pause').addClass('active');
@@ -117,7 +124,6 @@
       this.board.snake.move();
       this.render();
     } else {
-      // alert("You lose!");
       SG.updateHighScore(this.board.snake.score);
       SG.gameOver(this.$el);
 
@@ -129,9 +135,9 @@
     var $gameOver = $('.gameover');
     $gameOver.addClass('active');
     $gameOver.find('.yesAgain').click(function() {
-      new SG.View($el);
       $gameOver.removeClass('active');
-    });
+      this.view.restart();
+    }.bind(this));
   };
 
   SG.updateHighScore = function(score) {

@@ -91,7 +91,7 @@ li {
 .gameover, .welcome, .pause{
   display: none;
   position: absolute;
-  background-color: coral;
+  background-color: navajowhite;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
